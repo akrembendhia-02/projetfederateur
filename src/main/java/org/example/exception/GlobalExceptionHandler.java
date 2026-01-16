@@ -1,5 +1,5 @@
 package org.example.exception;
 
 public class GlobalExceptionHandler {
-    private String ok;
+    private String no;
 }
