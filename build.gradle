@@ -2,7 +2,25 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.0.1'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'jacoco'
+    id 'org.sonarqube' version '5.0.0.4638'
 }
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // generate report after tests
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required before generating the report
+
+    reports {
+        html.required = true      // HTML report you can open in browser
+        xml.required = true       // XML report (e.g., for CI tools)
+        csv.required = false
+    }
+}
+
 
 group = 'iteam.projet'
 version = '0.0.1-SNAPSHOT'
@@ -10,9 +28,10 @@ description = 'Demo project for Spring Boot'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
+
 
 repositories {
     mavenCentral()
@@ -20,7 +39,6 @@ repositories {
 
 
 dependencies {
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -33,8 +51,32 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'io.cucumber:cucumber-java:7.14.0'
+    testImplementation 'io.cucumber:cucumber-spring:7.14.0'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.14.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "akrembendhia-02_projetfederateur"
+        property "sonar.organization", "akrembendhia-02"
+        property "sonar.host.url", "https://sonarcloud.io"
+
+        // JaCoCo XML report
+        property "sonar.coverage.jacoco.xmlReportPaths",
+                "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+
+        // Optional but recommended
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.java.coveragePlugin", "jacoco"
+    }
+}
+

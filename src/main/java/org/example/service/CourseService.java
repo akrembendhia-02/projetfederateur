@@ -14,7 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
-public class CourseService {
+public class CourseService
+{
 
     private final CourseRepository courseRepo;
     private final TeacherProfileRepository teacherRepo;

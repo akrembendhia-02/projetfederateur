@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "springboot-app:${env.BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/akrembendhia-02/projetfederateur.git'
+            }
+        }
+
+        stage('Prepare') {
+            steps {
+                sh 'chmod +x gradlew'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh './gradlew clean build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './gradlew test'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    docker.build("${DOCKER_IMAGE}", ".")
+                }
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                echo "Docker Push skipped (manual TP)"
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+        }
+        success {
+            echo "Pipeline CI/CD terminé avec succès !"
+        }
+        failure {
+            echo "Échec du pipeline"
+        }
+    }
+}

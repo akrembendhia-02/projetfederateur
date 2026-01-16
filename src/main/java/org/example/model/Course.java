@@ -30,8 +30,6 @@ public class Course {
         this.category = category;
         this.teacher = teacher;
     }
-    // Getters & Setters
-
 
     public Long getId() {
         return id;
@@ -72,4 +70,5 @@ public class Course {
     public void setTeacher(TeacherProfile teacher) {
         this.teacher = teacher;
     }
+
 }

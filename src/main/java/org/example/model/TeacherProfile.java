@@ -42,6 +42,9 @@ public class TeacherProfile {
     public String getSpecialty() { return specialty; }
     public void setSpecialty(String specialty) { this.specialty = specialty; }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public int getYearsExperience() { return yearsExperience; }
     public void setYearsExperience(int yearsExperience) { this.yearsExperience = yearsExperience; }

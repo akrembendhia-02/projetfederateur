@@ -1,4 +1,3 @@
 package org.example.exception;
 
-public class GlobalExceptionHandler {
-}
+public class GlobalExceptionHandler { }
