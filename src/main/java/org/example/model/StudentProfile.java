@@ -13,6 +13,7 @@ public class StudentProfile {
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 
+
     private String level;   // niveau d'étude
     private int age;
 
