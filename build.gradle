@@ -58,6 +58,10 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+
 }
 
 tasks.named('test') {
@@ -70,11 +74,9 @@ sonarqube {
         property "sonar.organization", "akrembendhia-02"
         property "sonar.host.url", "https://sonarcloud.io"
 
-        // JaCoCo XML report
         property "sonar.coverage.jacoco.xmlReportPaths",
                 "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
 
-        // Optional but recommended
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.java.coveragePlugin", "jacoco"
     }
